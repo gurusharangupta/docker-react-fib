@@ -8,12 +8,11 @@ before_install:
 script:
     - docker run -e CI=true gurusharangupta/docker-react-fib npm run test
  
-    after_success:
+after_success:
     - docker build -t gurusharangupta/multi-client ./client
     - docker build -t gurusharangupta/multi-nginx ./nginx
     - docker build -t gurusharangupta/multi-server ./server
     - docker build -t gurusharangupta/multi-worker ./worker
-    #Log in to Docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     - docker push gurusharangupta/multi-client
     - docker push gurusharangupta/multi-server
